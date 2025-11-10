@@ -1,24 +1,21 @@
 import streamlit as st
 import random
+import time
 
-# ===== APP CONFIGURATION =====
 st.title("🚀 AI Chatbot - Tanush Portfolio")
-st.write("Demonstrating AI fundamentals and deployment capabilities")
+st.write("Now with typing indicators for premium UX")
 
-# ===== CHATBOT BRAIN =====
-# Dictionary of known questions and answers
+# Chat responses
 responses = {
     "hello": "Hello! I'm a web-deployed AI assistant from Tanush's portfolio!",
     "how are you": "Running smoothly on Streamlit - ready for production deployment!",
     "what can you do": "I showcase technical execution skills: Python, web deployment, and AI integration!",
     "tell me about yourself": "I'm part of Tanush's secret journey, please keep using me once in a while for updates on this application.",
     "bye": "Thanks for testing! Check out the GitHub repository for the code.",
-    # ADD THESE TWO NEW ONES:
     "what is streamlit": "Streamlit is a Python framework that turns data scripts into shareable web apps in minutes.",
-    "show me the code": "Check the GitHub repository for the full source code: https://github.com/tanushgargianuary-bot/ai-chatbot-project"
+    "show me the code": "Check the GitHub repository: https://github.com/tanushgargianuary-bot/ai-chatbot-project"
 }
 
-# Random answers for unknown questions
 random_responses = [
     "Interesting! I'm designed to demonstrate web deployment skills.",
     "As a portfolio project, I'm constantly evolving with new features.",
@@ -26,49 +23,48 @@ random_responses = [
     "Behind me is Python code ready for AI company infrastructure."
 ]
 
-# ===== MEMORY SYSTEM =====
-# Creates chat history that persists during the session
+# Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# ===== SIDEBAR WITH PROMPT SUGGESTIONS =====
+# Sidebar with prompt suggestions
 st.sidebar.markdown("### 💡 Try these prompts:")
-suggested_prompts = ["hello", "how are you", "what can you do", "tell me about yourself", "bye"]
-
-# Create clickable prompt buttons
-for prompt in suggested_prompts:
+for prompt in ["hello", "how are you", "what can you do", "tell me about yourself", "bye"]:
     if st.sidebar.button(prompt):
-        # Simulate user typing this prompt
         st.session_state.messages.append({"role": "user", "content": prompt})
-        # Generate bot response
-        user_input = prompt.lower().strip()
-        if user_input in responses:
-            response = responses[user_input]
-        else:
-            response = random.choice(random_responses)
-        st.session_state.messages.append({"role": "assistant", "content": response})
 
-# ===== DISPLAY CHAT HISTORY =====
-# Show all previous messages in the chat
+# Display chat messages
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# ===== CHAT INPUT =====
-# Main text box at bottom for user typing
-if prompt := st.chat_input("Type a message or use sidebar prompts..."):
-    # Add user message to history
+# NEW: Typing indicator function
+def show_typing_indicator():
+    with st.chat_message("assistant"):
+        with st.empty():
+            for i in range(3):
+                st.write("🤖 Typing" + "." * (i + 1))
+                time.sleep(0.5)
+
+# Handle all messages
+if st.session_state.messages:
+    last_message = st.session_state.messages[-1]
+    if last_message["role"] == "user":
+        # Show typing indicator
+        show_typing_indicator()
+        
+        # Generate response
+        user_input = last_message["content"].lower().strip()
+        if user_input in responses:
+            response = responses[user_input]
+        else:
+            response = random.choice(random_responses)
+        
+        # Replace typing indicator with actual response
+        st.session_state.messages.append({"role": "assistant", "content": response})
+        st.rerun()
+
+# Chat input
+if prompt := st.chat_input("Type a message..."):
     st.session_state.messages.append({"role": "user", "content": prompt})
-    
-    # Generate bot response
-    user_input = prompt.lower().strip()
-    if user_input in responses:
-        response = responses[user_input]
-    else:
-        response = random.choice(random_responses)
-    
-    # Add bot response to history
-    st.session_state.messages.append({"role": "assistant", "content": response})
-    
-    # Refresh to show new messages
     st.rerun()
