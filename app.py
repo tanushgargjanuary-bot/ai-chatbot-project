@@ -41,10 +41,14 @@ for message in st.session_state.messages:
 # NEW: Typing indicator function
 def show_typing_indicator():
     with st.chat_message("assistant"):
-        with st.empty():
+        with st.empty() as placeholder:
+            # Smooth dots animation
+            dots = ""
             for i in range(3):
-                st.write("🤖 Typing" + "." * (i + 1))
-                time.sleep(0.5)
+                dots += "."
+                placeholder.markdown(f"🤖 Thinking{dots}")
+                time.sleep(0.3)
+            placeholder.markdown("🤖 Thinking...")
 
 # Handle all messages
 if st.session_state.messages:
