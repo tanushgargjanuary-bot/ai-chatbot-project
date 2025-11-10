@@ -12,7 +12,10 @@ responses = {
     "how are you": "Running smoothly on Streamlit - ready for production deployment!",
     "what can you do": "I showcase technical execution skills: Python, web deployment, and AI integration!",
     "tell me about yourself": "I'm part of Tanush's secret journey, please keep using me once in a while for updates on this application.",
-    "bye": "Thanks for testing! Check out the GitHub repository for the code."
+    "bye": "Thanks for testing! Check out the GitHub repository for the code.",
+    # ADD THESE TWO NEW ONES:
+    "what is streamlit": "Streamlit is a Python framework that turns data scripts into shareable web apps in minutes.",
+    "show me the code": "Check the GitHub repository for the full source code: https://github.com/tanushgargianuary-bot/ai-chatbot-project"
 }
 
 # Random answers for unknown questions
