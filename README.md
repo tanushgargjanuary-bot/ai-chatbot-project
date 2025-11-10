@@ -10,3 +10,5 @@ A Python chatbot demonstrating natural language processing fundamentals.
 ## Usage
 ```bash
 python chatbot.py
+## 🚀 Live Demo
+[Test the deployed chatbot here](https://ai-chatbot-project-sxzpk4bjuxt6fpwxw9d4dm.streamlit.app)
