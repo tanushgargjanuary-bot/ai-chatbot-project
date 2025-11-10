@@ -11,7 +11,7 @@ responses = {
     "hello": "Hello! I'm a web-deployed AI assistant from Tanush's portfolio!",
     "how are you": "Running smoothly on Streamlit - ready for production deployment!",
     "what can you do": "I showcase technical execution skills: Python, web deployment, and AI integration!",
-    "tell me about yourself": "I'm part of Tanush's journey to build world-class AI companies. This is step one.",
+    "tell me about yourself": "I'm part of Tanush's secret journey, please keep using me once in a while for updates on this application.",
     "bye": "Thanks for testing! Check out the GitHub repository for the code."
 }
 
