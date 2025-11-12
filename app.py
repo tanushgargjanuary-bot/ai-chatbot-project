@@ -31,7 +31,7 @@ if "messages" not in st.session_state:
 st.sidebar.markdown("### 💡 Try these prompts:")
 for prompt in ["hello", "how are you", "what can you do", "tell me about yourself", "bye"]:
     if st.sidebar.button(prompt):
-        st.session_state.messages.append({"role": "user", "content": prompt})
+    st.session_state.messages.append({"role": "user", "content": prompt})
 
 # Display chat messages
 for message in st.session_state.messages:
