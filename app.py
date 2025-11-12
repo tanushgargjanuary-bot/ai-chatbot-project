@@ -58,23 +58,17 @@ if "messages" not in st.session_state:
 st.sidebar.markdown("### 💡 Try these prompts:")
 for prompt in ["hello", "how are you", "what can you do", "tell me about yourself", "bye"]:
     if st.sidebar.button(prompt):
-        st.session_state.messages.append({"role": "user", "content": prompt})  # FIXED: Added indentation
+        st.session_state.messages.append({"role": "user", "content": prompt})
 
 # Display chat messages
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Typing indicator function
+# FIXED: Simple typing indicator without time.sleep()
 def show_typing_indicator():
     with st.chat_message("assistant"):
-        with st.empty() as placeholder:
-            dots = ""
-            for i in range(3):
-                dots += "."
-                placeholder.markdown(f"🤖 Thinking{dots}")
-                time.sleep(0.3)
-            placeholder.markdown("🤖 Thinking...")
+        st.markdown("🤖 Thinking...")
 
 # Handle all messages
 if st.session_state.messages:
@@ -83,7 +77,7 @@ if st.session_state.messages:
         # Show typing indicator
         show_typing_indicator()
         
-        # Generate response - PROPERLY INDENTED
+        # Generate response
         user_input = last_message["content"].lower().strip()
 
         # First, check if user is asking about colors
