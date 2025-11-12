@@ -58,11 +58,24 @@ if st.session_state.messages:
         show_typing_indicator()
         
         # Generate response
-        user_input = last_message["content"].lower().strip()
-        if user_input in responses:
-            response = responses[user_input]
-        else:
-            response = random.choice(random_responses)
+user_input = last_message["content"].lower().strip()
+
+# First, check if user is asking about colors
+color_response = None
+for color_word in color_words:
+    if color_word in user_input:
+        rgb = predict_color(color_word)
+        if rgb is not None:
+            color_response = f"🎨 The color '{color_word}' is RGB: [{rgb[0]:.2f}, {rgb[1]:.2f}, {rgb[2]:.2f}]"
+            break
+
+# Choose response source based on content
+if color_response:
+    response = color_response  # Use AI color prediction
+elif user_input in responses:
+    response = responses[user_input]  # Use existing scripted responses
+else:
+    response = random.choice(random_responses)  # Fallback to random
         
         # Replace typing indicator with actual response
         st.session_state.messages.append({"role": "assistant", "content": response})
